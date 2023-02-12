@@ -4,7 +4,8 @@ enum {
 	INGAME,
 	HOVERING,
 	SWIPING,
-	RECYCLE
+	RECYCLE,
+	DISCORD
 }
 var state = INGAME
 var inNotif = false
@@ -47,6 +48,8 @@ func _process(delta):
 	
 	if state == RECYCLE && Input.is_action_just_pressed("left_click"):
 		get_tree().get_nodes_in_group("recycle")[0].empty()
+	if state == DISCORD && Input.is_action_just_pressed("left_click"):
+		get_tree().get_nodes_in_group("discordButton")[0].empty()
 
 
 
@@ -60,6 +63,8 @@ func _on_body_entered(body : Area2D):
 		hoveredNotification = body;
 	if body.is_in_group("recycle"):
 		state = RECYCLE
+	if body.is_in_group("discordButton"):
+		state = DISCORD
 
 
 func _on_body_exited(body : Area2D):

@@ -26,7 +26,7 @@ func _process(delta):
 				$Game.reset()
 	elif state == LOADING:
 		if $Backdrop.color.a8 > 0:
-			$Backdrop.color.a8 -= delta * 175
+			$Backdrop.color.a8 -= delta * 255
 		if $Backdrop.color.a8 <= 0:
 			$Backdrop.color.a8 = 0
 			state = GAME

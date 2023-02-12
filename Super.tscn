@@ -1,6 +1,6 @@
-[gd_scene load_steps=147 format=2]
+[gd_scene load_steps=148 format=2]
 
-[ext_resource path="res://Game.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Game/Game.tscn" type="PackedScene" id=1]
 [ext_resource path="res://explosion/0046.png" type="Texture" id=2]
 [ext_resource path="res://explosion/0025.png" type="Texture" id=3]
 [ext_resource path="res://explosion/0045.png" type="Texture" id=4]
@@ -145,6 +145,7 @@
 [ext_resource path="res://Super.gd" type="Script" id=143]
 [ext_resource path="res://Theme.tres" type="Theme" id=144]
 [ext_resource path="res://explosion.wav" type="AudioStream" id=145]
+[ext_resource path="res://Exit the Premises.ogg" type="AudioStream" id=146]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -183,7 +184,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Title" type="RichTextLabel" parent="Menu"]
+[node name="Text" type="RichTextLabel" parent="Menu"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -539.0
@@ -237,6 +238,8 @@ __meta__ = {
 stream = ExtResource( 145 )
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 146 )
+autoplay = true
 
 [connection signal="lose" from="Game" to="." method="_on_Game_lose"]
 [connection signal="pressed" from="Menu/PlayButton" to="." method="_on_PlayButton_pressed"]

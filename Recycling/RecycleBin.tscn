@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Roboto-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Recycling/Recycle.png" type="Texture" id=2]
 [ext_resource path="res://Recycling/RecycleBin.gd" type="Script" id=3]
+[ext_resource path="res://Theme.tres" type="Theme" id=4]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 61.5, 72 )
@@ -41,3 +42,15 @@ anchor_bottom = 1.0
 custom_fonts/font = SubResource( 1 )
 text = "00"
 max_lines_visible = 1
+
+[node name="Warning" type="Label" parent="."]
+visible = false
+margin_left = 154.0
+margin_top = -72.0
+margin_right = 831.0
+margin_bottom = 143.0
+theme = ExtResource( 4 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "<- Recycle bin is getting full"
+autowrap = true
