@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Recycling/RecycleBin.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Game/Discord.gd" type="Script" id=2]
-[ext_resource path="res://Mouse/Mouse.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Game/Extinguisher.gd" type="Script" id=3]
 [ext_resource path="res://Game/Game.gd" type="Script" id=4]
 [ext_resource path="res://Game/extinguisher.png" type="Texture" id=5]
 [ext_resource path="res://Game/background.jpg" type="Texture" id=6]
@@ -11,24 +11,25 @@
 [ext_resource path="res://Roboto-Bold.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://Theme.tres" type="Theme" id=10]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 42.5, 44 )
-
 [sub_resource type="DynamicFont" id=2]
 size = 27
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 9 )
 
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 35.5, 31 )
+
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 242.5, 132 )
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 44, 39.5 )
+extents = Vector2( 38, 34.5 )
 
 [node name="Game" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_lock_": true
@@ -37,9 +38,9 @@ __meta__ = {
 [node name="Background" type="Sprite" parent="."]
 position = Vector2( 960, 540 )
 texture = ExtResource( 6 )
-
-[node name="Mouse" parent="." instance=ExtResource( 3 )]
-position = Vector2( 179, 107 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
@@ -52,6 +53,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -70.0
+mouse_filter = 2
 color = Color( 0.145098, 0.152941, 0.176471, 1 )
 __meta__ = {
 "_edit_lock_": true
@@ -65,10 +67,6 @@ texture = ExtResource( 7 )
 [node name="Discord" type="Area2D" parent="." groups=["discordButton"]]
 position = Vector2( 976, 1042 )
 script = ExtResource( 2 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Discord"]
-position = Vector2( 0.5, 4 )
-shape = SubResource( 1 )
 
 [node name="Panel" type="ColorRect" parent="Discord"]
 margin_left = 14.0
@@ -101,6 +99,10 @@ custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 text = "Discord 
 notifications
 filling up   V"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Discord"]
+position = Vector2( 0.5, 0 )
+shape = SubResource( 1 )
 
 [node name="Temp" type="Area2D" parent="." groups=["temperature"]]
 position = Vector2( 308, 585 )
@@ -149,6 +151,7 @@ V overheating"
 
 [node name="Extinguisher" type="Area2D" parent="." groups=["extinguisher"]]
 position = Vector2( 1075, 1046 )
+script = ExtResource( 3 )
 
 [node name="Extinguisher" type="Sprite" parent="Extinguisher"]
 position = Vector2( -1, -1 )
@@ -156,7 +159,7 @@ scale = Vector2( 0.1235, 0.1235 )
 texture = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Extinguisher"]
-position = Vector2( 0, 0.5 )
+position = Vector2( 0, -1.5 )
 shape = SubResource( 3 )
 
 [node name="ColorRect" type="ColorRect" parent="Extinguisher"]
@@ -169,5 +172,11 @@ margin_right = 31.0
 margin_bottom = 32.0
 color = Color( 1, 0.568627, 0.835294, 1 )
 
-[connection signal="swiped" from="Mouse" to="." method="_on_Mouse_swiped"]
+[node name="MouseExtinguisher" type="Sprite" parent="."]
+visible = false
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 5 )
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="clicked" from="Temp" to="." method="_on_Temp_clicked"]
+[connection signal="clicked" from="Extinguisher" to="." method="_on_Extinguisher_clicked"]

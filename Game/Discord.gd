@@ -1,4 +1,4 @@
-extends Node2D
+extends Area2D
 
 var counter = 0
 var hints = true
@@ -22,10 +22,18 @@ func updateLabel():
 		$Warning.visible = true
 	else:
 		$Warning.visible = false
-	
+
 
 
 func empty():
 	counter = 0;
 	updateLabel()
+
+
+func _input_event(viewport, event, shape_idx):
+	if (event is InputEventMouseButton && event.button_index == BUTTON_LEFT && event.pressed):
+		empty()
+
+
+
 

@@ -43,7 +43,7 @@ func _process(delta):
 				state = INGAME
 		else:
 			state = HOVERING
-			get_parent().updateNotifs()
+	
 	
 	if state == INGAME && !Input.is_action_pressed("left_click"):
 		hoveredNotification = null

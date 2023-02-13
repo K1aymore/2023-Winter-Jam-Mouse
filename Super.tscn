@@ -159,6 +159,7 @@ animations = [ {
 pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 script = ExtResource( 143 )
 __meta__ = {
 "_edit_lock_": true
@@ -172,6 +173,7 @@ margin_left = -8.0
 margin_top = -64.0
 margin_right = 1975.0
 margin_bottom = 1144.0
+mouse_filter = 2
 color = Color( 0.0470588, 0.121569, 0.12549, 1 )
 __meta__ = {
 "_edit_lock_": true
@@ -180,6 +182,7 @@ __meta__ = {
 [node name="Menu" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 __meta__ = {
 "_edit_lock_": true
 }
@@ -187,31 +190,14 @@ __meta__ = {
 [node name="Text" type="RichTextLabel" parent="Menu"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -539.0
-margin_top = 85.0
-margin_right = 557.0
-margin_bottom = 207.0
+margin_left = -535.0
+margin_top = 179.0
+margin_right = 561.0
+margin_bottom = 301.0
+mouse_filter = 2
 theme = ExtResource( 144 )
 text = "Notification Extermination"
 scroll_active = false
-
-[node name="PlayButton" type="Button" parent="Menu"]
-margin_left = 267.0
-margin_top = 314.0
-margin_right = 454.0
-margin_bottom = 426.0
-theme = ExtResource( 144 )
-text = "Play"
-flat = true
-
-[node name="Hints" type="CheckButton" parent="Menu"]
-margin_left = 265.0
-margin_top = 463.0
-margin_right = 559.0
-margin_bottom = 577.0
-theme = ExtResource( 144 )
-pressed = true
-text = "Hints"
 
 [node name="LoseScore" type="Label" parent="Menu"]
 anchor_left = 1.0
@@ -222,8 +208,42 @@ margin_left = -791.0
 margin_top = -411.0
 margin_right = -91.0
 margin_bottom = -106.0
+mouse_filter = 0
 theme = ExtResource( 144 )
 autowrap = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
+margin_left = 302.0
+margin_top = 438.0
+margin_right = 782.0
+margin_bottom = 768.0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="PlayButton" type="Button" parent="Menu/VBoxContainer"]
+margin_bottom = 106.0
+mouse_filter = 1
+theme = ExtResource( 144 )
+text = "Play"
+flat = true
+
+[node name="Hints" type="CheckButton" parent="Menu/VBoxContainer"]
+margin_top = 110.0
+margin_right = 480.0
+margin_bottom = 218.0
+mouse_filter = 1
+theme = ExtResource( 144 )
+pressed = true
+text = "Hints"
+
+[node name="Fullscreen" type="CheckButton" parent="Menu/VBoxContainer"]
+margin_top = 222.0
+margin_right = 480.0
+margin_bottom = 330.0
+mouse_filter = 1
+theme = ExtResource( 144 )
+text = "Fullscreen"
 
 [node name="Explosion" type="AnimatedSprite" parent="."]
 pause_mode = 2
@@ -242,5 +262,6 @@ stream = ExtResource( 146 )
 autoplay = true
 
 [connection signal="lose" from="Game" to="." method="_on_Game_lose"]
-[connection signal="pressed" from="Menu/PlayButton" to="." method="_on_PlayButton_pressed"]
-[connection signal="toggled" from="Menu/Hints" to="." method="_on_Hints_toggled"]
+[connection signal="pressed" from="Menu/VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="toggled" from="Menu/VBoxContainer/Hints" to="." method="_on_Hints_toggled"]
+[connection signal="toggled" from="Menu/VBoxContainer/Fullscreen" to="." method="_on_Fullscreen_toggled"]

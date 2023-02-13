@@ -3,6 +3,7 @@ extends Area2D
 var counter = 0
 var hints = true
 
+signal clicked
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,4 +32,8 @@ func updateLabel():
 
 func extinguish():
 	counter = 5
+
+func _input_event(viewport, event, shape_idx):
+	if (event is InputEventMouseButton && event.button_index == BUTTON_LEFT && event.pressed):
+		emit_signal("clicked")
 

@@ -4,7 +4,8 @@ extends Control
 enum {
 	MENU,
 	LOADING,
-	GAME
+	GAME,
+	PAUSED
 }
 
 var state = MENU
@@ -16,6 +17,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if Input.is_action_just_pressed("ui_cancel"):
+		openMenu()
+		state = PAUSED
 	
 	if state == MENU:
 		if $Backdrop.color.a8 < 255:
@@ -24,6 +28,11 @@ func _process(delta):
 			$Backdrop.color.a8 = 255
 			if state == MENU:
 				$Game.reset()
+	elif state == PAUSED:
+		if $Backdrop.color.a8 < 255:
+			$Backdrop.color.a8 += delta * 255
+		if $Backdrop.color.a8 >= 255:
+			$Backdrop.color.a8 = 255
 	elif state == LOADING:
 		if $Backdrop.color.a8 > 0:
 			$Backdrop.color.a8 -= delta * 255
@@ -36,7 +45,6 @@ func _process(delta):
 func openMenu():
 	get_tree().paused = true
 	$Menu.visible = true
-	state = MENU
 
 
 func _on_Game_lose(score : int):
@@ -46,6 +54,7 @@ func _on_Game_lose(score : int):
 	$Explosion/Sound.play()
 	$Menu/LoseScore.text = "You cleared " + str(score) + " notifications"
 	openMenu()
+	state = MENU
 
 
 func _on_PlayButton_pressed():
@@ -55,6 +64,11 @@ func _on_PlayButton_pressed():
 
 func _on_Hints_toggled(enabled : bool):
 	$Game.hints = enabled
+
+
+func _on_Fullscreen_toggled(button_pressed):
+	OS.window_fullscreen = button_pressed
+
 
 
 
