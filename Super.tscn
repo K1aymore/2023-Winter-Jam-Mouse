@@ -226,9 +226,10 @@ __meta__ = {
 }
 
 [node name="PlayButton" type="Button" parent="Menu/VBoxContainer"]
-margin_right = 480.0
+margin_right = 179.0
 margin_bottom = 106.0
 mouse_filter = 1
+size_flags_horizontal = 0
 theme = ExtResource( 144 )
 text = "Play"
 flat = true
@@ -250,12 +251,21 @@ mouse_filter = 1
 theme = ExtResource( 144 )
 text = "Fullscreen"
 
+[node name="Quit" type="Button" parent="Menu/VBoxContainer"]
+margin_top = 334.0
+margin_right = 171.0
+margin_bottom = 440.0
+size_flags_horizontal = 0
+theme = ExtResource( 144 )
+text = "Quit"
+flat = true
+
 [node name="Label" type="Label" parent="Menu"]
 margin_left = 543.0
 margin_top = 634.0
 margin_right = 747.0
 margin_bottom = 648.0
-text = "do not turn off hints you will die"
+text = "do not turn hints off you will die"
 
 [node name="Explosion" type="AnimatedSprite" parent="."]
 pause_mode = 2
@@ -285,4 +295,5 @@ shape = SubResource( 2 )
 [connection signal="pressed" from="Menu/VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="toggled" from="Menu/VBoxContainer/Hints" to="." method="_on_Hints_toggled"]
 [connection signal="toggled" from="Menu/VBoxContainer/Fullscreen" to="." method="_on_Fullscreen_toggled"]
+[connection signal="pressed" from="Menu/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="clicked" from="Pause Button" to="." method="_on_Pause_Button_clicked"]

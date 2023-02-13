@@ -80,5 +80,7 @@ func _on_Pause_Button_clicked():
 	state = PAUSED
 
 
+func _on_Quit_pressed():
+	get_tree().quit()
 
 

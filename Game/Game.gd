@@ -42,7 +42,7 @@ func _ready():
 
 func reset():
 	totalScore = 0
-	timerBaseTime = 0.45
+	timerBaseTime = 0.42
 	$Timer.wait_time = timerBaseTime
 	$RecycleBin.counter = 0
 	$RecycleBin.updateLabel()
@@ -61,7 +61,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_select"):
 		_on_Timer_timeout()
 	
-	$Temp.plusCounter(delta * (1 + (totalScore/140.0)))
+	$Temp.plusCounter(delta * (1.5 + (totalScore/140.0)))
 	if $Temp.counter > 60:
 		lose()
 	#$Extinguisher/ColorRect.visible = $Mouse.holdingExtinguisher
