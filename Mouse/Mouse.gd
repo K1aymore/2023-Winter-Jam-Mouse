@@ -5,10 +5,13 @@ enum {
 	HOVERING,
 	SWIPING,
 	RECYCLE,
-	DISCORD
+	DISCORD,
+	EXTINGUISHER,
+	TEMPERATURE
 }
 var state = INGAME
 var inNotif = false
+var holdingExtinguisher = false
 
 var hoveredNotification : Node2D = null
 var swipeStartX : int
@@ -50,6 +53,18 @@ func _process(delta):
 		get_tree().get_nodes_in_group("recycle")[0].empty()
 	if state == DISCORD && Input.is_action_just_pressed("left_click"):
 		get_tree().get_nodes_in_group("discordButton")[0].empty()
+	if state == TEMPERATURE && holdingExtinguisher && Input.is_action_just_pressed("left_click"):
+		state = INGAME
+		get_tree().get_nodes_in_group("temperature")[0].extinguish()
+	if holdingExtinguisher && Input.is_action_just_pressed("left_click"):
+		holdingExtinguisher = false
+	if state == EXTINGUISHER && Input.is_action_just_pressed("left_click"):
+		holdingExtinguisher = true
+	
+	if holdingExtinguisher:
+		$Extinguisher.visible = true
+	else:
+		$Extinguisher.visible = false
 
 
 
@@ -65,6 +80,10 @@ func _on_body_entered(body : Area2D):
 		state = RECYCLE
 	if body.is_in_group("discordButton"):
 		state = DISCORD
+	if body.is_in_group("extinguisher"):
+		state = EXTINGUISHER
+	if body.is_in_group("temperature"):
+		state = TEMPERATURE
 
 
 func _on_body_exited(body : Area2D):

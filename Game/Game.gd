@@ -9,6 +9,8 @@ var notifImagesDiscord = []
 
 var lastNotif : int = 0;
 
+var randomer : RandomNumberGenerator = RandomNumberGenerator.new()
+var timerBaseTime
 
 var totalScore : int = 0
 
@@ -33,17 +35,20 @@ func _ready():
 			notifImagesDiscord.append(file_name.begins_with("Discord"))
 	dir.list_dir_end()
 	
-	
+	randomer.randomize()
 	reset()
 
 
 func reset():
 	totalScore = 0
-	$Timer.wait_time = 0.6
+	timerBaseTime = 0.53
+	$Timer.wait_time = timerBaseTime
 	$RecycleBin.counter = 0
 	$RecycleBin.updateLabel()
 	$Discord.counter = 0
 	$Discord.updateLabel()
+	$Temp.counter = 0
+	$Temp.updateLabel()
 	
 	while notifications.size() > 0:
 		notifications.pop_back().queue_free()
@@ -54,16 +59,21 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_select"):
 		_on_Timer_timeout()
 	
+	$Temp.plusCounter(delta * (1 + (totalScore/150.0)))
+	if $Temp.counter > 60:
+		lose()
+	$Extinguisher/ColorRect.visible = $Mouse.holdingExtinguisher
+
 
 func updateNotifs():
 	for i in range(0, min(5, notifications.size())):
-		notifications[i].position = Vector2(1600, 950 - i*210)
+		notifications[i].position = Vector2(1600, 900 - i*205)
 		
 	for i in range(5, min(10, notifications.size())):
-		notifications[i].position = Vector2(975, 950 - (i-5)*210)
+		notifications[i].position = Vector2(975, 900 - (i-5)*205)
 		
 	for i in range(10, min(15, notifications.size())):
-		notifications[i].position = Vector2(300, 950 - (i-10)*210)
+		notifications[i].position = Vector2(300, 900 - (i-10)*205)
 	
 	if notifications.size() > 14:
 		lose()
@@ -71,7 +81,13 @@ func updateNotifs():
 
 
 func _on_Timer_timeout():
-	$Timer.wait_time /= 1.003  # 0.3% faster each time
+	if timerBaseTime > 0.11:
+		timerBaseTime /= 1.001  # 0.x% faster each time
+	else:
+		timerBaseTime = 0.11
+	
+	$Timer.wait_time = timerBaseTime + randomer.randfn(0, 0.1)
+	
 	
 	var newNotif = notifLoad.instance()
 	
