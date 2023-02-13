@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Recycling/RecycleBin.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Game/Discord.gd" type="Script" id=2]
@@ -22,6 +22,20 @@ extents = Vector2( 35.5, 31 )
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 242.5, 132 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0, 0.74902, 0.0941176, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_bottom = 3
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.145098, 0.145098, 0.145098, 1 )
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 38, 34.5 )
@@ -128,6 +142,9 @@ margin_left = -134.0
 margin_top = 39.0
 margin_right = 134.0
 margin_bottom = 114.0
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 6 )
+value = 40.0
 rounded = true
 percent_visible = false
 

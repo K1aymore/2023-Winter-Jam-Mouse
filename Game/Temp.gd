@@ -17,8 +17,9 @@ func plusCounter(num):
 
 func updateLabel():
 	var color = $Label.get("custom_colors/font_color")
-	color.h = 0.4 - counter * 0.007
+	color.h = 0.38 - counter * 0.007
 	$Label.set("custom_colors/font_color", color)
+	$ProgressBar.get("custom_styles/fg").bg_color = color
 	
 	$ProgressBar.value = counter + 40
 	$ProgressBar/Label.text = str(counter + 40)
@@ -31,7 +32,7 @@ func updateLabel():
 
 
 func extinguish():
-	counter = 5
+	counter = 0
 
 func _input_event(viewport, event, shape_idx):
 	if (event is InputEventMouseButton && event.button_index == BUTTON_LEFT && event.pressed):

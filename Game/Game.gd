@@ -4,10 +4,19 @@ extends Control
 var notifications = []
 var notifLoad : PackedScene = load("res://Game/Notification.tscn")
 
-var notifImages = []
-var notifImagesDiscord = []
+var notifImages = [
+	preload("res://Notifications/Discord Snail.png"),
+	preload("res://Notifications/DiscordClyde.jpg"),
+	preload("res://Notifications/Dell Pilotes.png"),
+	preload("res://Notifications/MacOSMacro.png"),
+	preload("res://Notifications/Test message.png"),
+	preload("res://Notifications/Update Available.png"),
+]
+var notifImagesDiscord = [ true, true, false, false, false, false ]
 
 var lastNotif : int = 0;
+
+const NOTIF_SPEED = 5000
 
 var randomer : RandomNumberGenerator = RandomNumberGenerator.new()
 var timerBaseTime
@@ -26,28 +35,14 @@ signal lose
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var path = "res://Notifications"
-	var dir = Directory.new()
-	dir.open(path)
-	dir.list_dir_begin()
-	var count : int = 0
-	while true:
-		var file_name = dir.get_next()
-		if file_name == "":
-			#break the while loop when get_next() returns ""
-			break
-		elif !file_name.begins_with(".") && !file_name.ends_with(".import"):
-			notifImages.append(load(path + "/" + file_name))
-			notifImagesDiscord.append(file_name.begins_with("Discord"))
-	dir.list_dir_end()
-	
+
 	randomer.randomize()
 	reset()
 
 
 func reset():
 	totalScore = 0
-	timerBaseTime = 0.5
+	timerBaseTime = 0.45
 	$Timer.wait_time = timerBaseTime
 	$RecycleBin.counter = 0
 	$RecycleBin.updateLabel()
@@ -93,13 +88,17 @@ func updateNotifs(delta):
 	for i in range(0, min(5, notifications.size())):
 		var notif : Area2D = notifications[i]
 		var newPosition = Vector2(1600, 900 - i*205)
-		notif.position = notif.position.move_toward(newPosition, delta * 3000)
+		notif.position = notif.position.move_toward(newPosition, delta * NOTIF_SPEED)
 		
 	for i in range(5, min(10, notifications.size())):
-		notifications[i].position = Vector2(975, 900 - (i-5)*205)
+		var notif : Area2D = notifications[i]
+		var newPosition = Vector2(975, 900 - (i-5)*205)
+		notif.position = notif.position.move_toward(newPosition, delta * NOTIF_SPEED)
 		
 	for i in range(10, min(15, notifications.size())):
-		notifications[i].position = Vector2(300, 900 - (i-10)*205)
+		var notif : Area2D = notifications[i]
+		var newPosition = Vector2(300, 900 - (i-10)*205)
+		notif.position = notif.position.move_toward(newPosition, delta * NOTIF_SPEED)
 	
 	if notifications.size() > 14:
 		lose()
@@ -108,7 +107,7 @@ func updateNotifs(delta):
 
 func _on_Timer_timeout():
 	if timerBaseTime > 0.11:
-		timerBaseTime /= 1.0013  # 0.x% faster each time
+		timerBaseTime /= 1.0008  # 0.0x% faster each time
 	else:
 		timerBaseTime = 0.11
 	

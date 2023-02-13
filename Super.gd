@@ -17,6 +17,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	$Menu/VBoxContainer/Fullscreen.set_pressed_no_signal(OS.window_fullscreen)
+	
+	if Input.is_action_just_pressed("fullscreen"):
+		_on_Fullscreen_toggled(!OS.window_fullscreen)
+		
 	if Input.is_action_just_pressed("ui_cancel"):
 		openMenu()
 		state = PAUSED
@@ -68,6 +73,11 @@ func _on_Hints_toggled(enabled : bool):
 
 func _on_Fullscreen_toggled(button_pressed):
 	OS.window_fullscreen = button_pressed
+
+
+func _on_Pause_Button_clicked():
+	openMenu()
+	state = PAUSED
 
 
 
